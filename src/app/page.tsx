@@ -135,27 +135,41 @@ export default function Home() {
       {/* Header con animación */}
       <Header animate={true} />
 
-      {/* Botón CONTACTO - esquina inferior derecha */}
+      {/* Botón CONTACTO - Mejorado */}
       <motion.div
-        className="fixed bottom-6 right-6 z-50"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.7 }}
-        transition={{ duration: 0.6, delay: 0.5 }}
+        className="fixed left-8 right-8 z-50"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1 }}
       >
         <motion.button
           onClick={() => setShowFooter(!showFooter)}
-          className="text-white font-light text-sm tracking-[0.2em] cursor-pointer select-none bg-transparent border-none uppercase"
-          whileHover={{ scale: 1.05, opacity: 1 }}
+          className="relative overflow-hidden group"
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          CONTACTO
+          {/* Fondo con efecto */}
+          <div className="absolute inset-0 backdrop-blur-sm border border-white/20 rounded-full  transition-all duration-300" />
+          
+          {/* Texto */}
+          <span className="block px-8 py-4 text-white  tracking-[0.3em] uppercase">
+            CONTACTO
+          </span>
+          
+          {/* Indicador visual */}
+          <motion.div 
+            className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-blue-500 to-blue-300"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: showFooter ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
+          />
         </motion.button>
       </motion.div>
 
       {/* Espacio para scroll */}
       <div className="h-screen" />
 
-      {/* Secciones que aparecen después */}
+      {/* Secciones que aparecen después - Mejoradas para móvil */}
       <motion.div 
         className={`min-h-screen flex ${isMobile ? 'flex-col' : 'flex-row'} w-full max-w-full relative z-20`}
         initial={{ opacity: 0, y: 50 }}
@@ -167,20 +181,29 @@ export default function Home() {
       >
         {/* Sección Web */}
         <motion.div 
-          className={`flex-1 flex items-center justify-center min-h-screen w-full max-w-full ${!isMobile ? 'border-r border-white/10' : 'border-b border-white/10'}`}
+          className={`flex-1 flex items-center justify-center ${isMobile ? 'min-h-[50vh]' : 'min-h-screen'} w-full max-w-full ${!isMobile ? 'border-r border-white/10' : 'border-b border-white/10'} relative overflow-hidden`}
           whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.02)" }}
           transition={{ duration: 0.3 }}
         >
-          <Link href="/web" className="w-full h-full flex items-center justify-center">
+          {/* Efecto de fondo sutil */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          <Link href="/web" className="w-full h-full flex items-center justify-center relative z-10">
             <motion.div
-              className="text-center"
+              className="text-center px-8"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             >
-              <h2 className="text-[3rem] text-white font-light mb-6 tracking-wider">     
+              <motion.h2 
+                className={`${isMobile ? 'text-[2.5rem]' : 'text-[3rem]'} text-white font-light mb-4 tracking-wider`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+              >     
                 WEB
-              </h2>
-              <p className="text-white/60 text-xl md:text-2xl">
+              </motion.h2>
+              <p className={`text-white/60 ${isMobile ? 'text-lg' : 'text-xl md:text-2xl'} leading-relaxed`}>
                 Proyectos web y desarrollo
               </p>
             </motion.div>
@@ -189,20 +212,29 @@ export default function Home() {
 
         {/* Sección Visual */}
         <motion.div 
-          className="flex-1 flex items-center justify-center min-h-screen w-full max-w-full"
+          className={`flex-1 flex items-center justify-center ${isMobile ? 'min-h-[50vh]' : 'min-h-screen'} w-full max-w-full relative overflow-hidden`}
           whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.02)" }}
           transition={{ duration: 0.3 }}
         >
-          <Link href="/visual" className="w-full h-full flex items-center justify-center">
+          {/* Efecto de fondo sutil */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          <Link href="/visual" className="w-full h-full flex items-center justify-center relative z-10">
             <motion.div
-              className="text-center"
+              className="text-center px-8"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             >
-              <h2 className="text-[3rem] text-white font-light mb-6 tracking-wider">    
+              <motion.h2 
+                className={`${isMobile ? 'text-[2.5rem]' : 'text-[3rem]'} text-white font-light mb-4 tracking-wider`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+              >    
                 VISUAL
-              </h2>
-              <p className="text-white/60 text-xl md:text-2xl">
+              </motion.h2>
+              <p className={`text-white/60 ${isMobile ? 'text-lg' : 'text-xl md:text-2xl'} leading-relaxed`}>
                 Fotografía y arte digital
               </p>
             </motion.div>
