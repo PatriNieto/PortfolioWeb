@@ -130,11 +130,6 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Debug - ver si el estado cambia
-  useEffect(() => {
-    console.log('showFooter:', showFooter);
-  }, [showFooter]);
-
   return (
     <div className="bg-black min-h-screen w-full overflow-x-hidden relative">
       {/* Header con animación */}
@@ -247,7 +242,7 @@ export default function Home() {
         </motion.div>
       </motion.div>
 
-      {/* Footer deslizante - VERSIÓN FINAL */}
+      {/* Footer mejorado - Distribución vertical */}
       {showFooter && (
         <>
           {/* Overlay oscuro */}
@@ -261,46 +256,51 @@ export default function Home() {
           
           {/* Footer azul eléctrico */}
           <div
-            className="fixed flex left-0 right-0 z-[100] w-full"
+            className="fixed left-0 right-0 z-[100] w-full h-full flex flex-col content-center items-center justify-center"
             style={{
+              top: 0,
               bottom: 0,
               background: '#2b00ff',
-              minHeight: '100vh'  
             }}
           >
-            {/* Barra decorativa superior */}
-            
-            <div className={`w-full mx-auto ${isMobile ? 'px-6 py-8' : 'px-12 py-12'}`}>
-            
           
-
-              <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'grid-cols-1 gap-2'} max-w-5xl mx-auto mb-6`}>
-                {/* Email */}
-                <div className="text-center md:text-left">
+            <div className={`w-full max-w-4xl h-full ${isMobile ? 'px-8' : 'px-16'}`}>
+            <button
+              onClick={() => setShowFooter(false)}
+              className="fixed z-[110]  text-4xl "
+            >
+              ×
+            </button> 
+              {/* Contenido distribuido verticalmente */}
+              <div className="flex flex-col h-full content-center items-center justify-center gap-12 pb-8">
                 
+                {/* Email */}
+                <div
+                className="pb-8">
+             
                   <a 
                     href="mailto:patricianieto2.0@gmail.com" 
-                    className={`text-white ${isMobile ? 'text-sm' : 'text-base'} font-light hover:text-white/80 transition-colors block break-all`}
+                    className={`text-white ${isMobile ? 'text-xl' : 'text-3xl'} font-light hover:text-white/70 transition-colors block break-all`}
                   >
                     patricianieto2.0@gmail.com
                   </a>
                 </div>
 
                 {/* Teléfono */}
-                <div className="text-center md:text-left">
-                  
+                <div>
+             
                   <a 
                     href="tel:+34625093694" 
-                    className={`text-white ${isMobile ? 'text-sm' : 'text-base'} font-light hover:text-white/80 transition-colors block`}
+                    className={`text-white ${isMobile ? 'text-xl' : 'text-3xl'} font-light hover:text-white/70 transition-colors block`}
                   >
                     +34 625 093 694
                   </a>
                 </div>
 
                 {/* Redes Sociales */}
-                <div className="text-center md:text-left">
-               
-                  <div className={`flex ${isMobile ? 'flex-col items-center' : 'flex-col'} gap-2`}>
+                <div>
+         
+                  <div className="flex flex-col gap-4">
                     {[
                       { name: 'GitHub', url: 'https://github.com' },
                       { name: 'LinkedIn', url: 'https://linkedin.com' },
@@ -311,23 +311,20 @@ export default function Home() {
                         href={red.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`text-white ${isMobile ? 'text-sm' : 'text-base'} font-light hover:text-white/80 transition-colors inline-flex items-center gap-1`}
+                        className={`text-white ${isMobile ? 'text-lg' : 'text-2xl'} font-light hover:text-white/70 transition-all inline-flex items-center gap-3 hover:translate-x-2`}
                       >
-                        {red.name} <span className="text-xs">→</span>
+                        {red.name} <span>→</span>
                       </a>
                     ))}
                   </div>
                 </div>
-                <button
-  onClick={() => setShowFooter(false)}
-  className={`fixed ${isMobile ? 'top-4 right-4' : 'top-6 right-6'} z-[110] text-white ${isMobile ? 'text-2xl' : 'text-3xl'} font-light hover:opacity-70 transition-opacity`}
->
-  ✕
-</button>
-              </div>
 
-          
+              </div>
+    
             </div>
+
+            {/* Botón cerrar - Simple */}
+       
           </div>
         </>
       )}
