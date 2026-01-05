@@ -1,13 +1,8 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 
-// Importa el Header compartido
-// import Header from "@/components/Header";
-
-// Por ahora simulo el Header aquí para que funcione en el artifact
 function Header({ animate = false }) {
   const [isMobile, setIsMobile] = useState(false);
   const [scrollY, setScrollY] = useState(0);
@@ -27,6 +22,8 @@ function Header({ animate = false }) {
 
   useEffect(() => {
     if (animate) {
+      setScrollY(window.scrollY);
+      
       const handleScroll = () => {
         setScrollY(window.scrollY);
       };
@@ -63,7 +60,7 @@ function Header({ animate = false }) {
           }}
           transition={{ duration: animate ? 0.1 : 0, ease: "linear" }}
         >
-          <Link href="/" className="pointer-events-auto">
+          <a href="#home" className="pointer-events-auto">
             <motion.h1
               className="text-white leading-none font-light text-center giant-text cursor-pointer select-none"
               style={{ 
@@ -78,7 +75,7 @@ function Header({ animate = false }) {
             >
               PATRICIA NIETO
             </motion.h1>
-          </Link>
+          </a>
         </motion.div>
       ) : (
         <motion.div
@@ -91,7 +88,7 @@ function Header({ animate = false }) {
           }}
           transition={{ duration: animate ? 0.1 : 0, ease: "linear" }}
         >
-          <Link href="/" className="pointer-events-auto">
+          <a href="#home" className="pointer-events-auto">
             <motion.h1
               className="text-white leading-none font-light tracking-normal md:tracking-wide giant-text text-left pl-6 pt-6 cursor-pointer select-none"
               initial={animate ? { opacity: 0 } : false}
@@ -102,7 +99,7 @@ function Header({ animate = false }) {
             >
               PATRICIA NIETO
             </motion.h1>
-          </Link>
+          </a>
         </motion.div>
       )}
     </>
@@ -111,7 +108,6 @@ function Header({ animate = false }) {
 
 export default function Home() {
   const [showSections, setShowSections] = useState(false);
-  const [showFooter, setShowFooter] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -130,48 +126,27 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.style.scrollSnapType = 'y mandatory';
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    return () => {
+      document.documentElement.style.scrollSnapType = '';
+      document.documentElement.style.scrollBehavior = '';
+    };
+  }, []);
+
   return (
     <div className="bg-black min-h-screen w-full overflow-x-hidden relative">
-      {/* Header con animación */}
       <Header animate={true} />
 
-      {/* Botón CONTACTO - Posición fija abajo derecha */}
-      <motion.div
-        className={`fixed ${isMobile ? 'bottom-6 right-6' : 'bottom-8 right-8'} z-50`}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.5 }}
-      >
-        <motion.button
-          onClick={() => setShowFooter(!showFooter)}
-          className="relative overflow-hidden group"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          {/* Fondo con efecto */}
-          <div className="absolute inset-0 bg-white/5 backdrop-blur-sm border border-white/20 rounded-full group-hover:bg-white/10 transition-all duration-300" />
-          
-          {/* Texto */}
-          <span className={`relative block ${isMobile ? 'px-6 py-3 text-xs' : 'px-8 py-4 text-sm'} text-white font-light tracking-[0.3em] uppercase`}>
-            Contacto
-          </span>
-          
-          {/* Indicador visual */}
-          <motion.div 
-            className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-blue-500 to-blue-300"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: showFooter ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-          />
-        </motion.button>
-      </motion.div>
+      {/* Primera sección - Hero */}
+      <div id="home" className="h-screen scroll-snap-align-start" />
 
-      {/* Espacio para scroll */}
-      <div className="h-screen" />
-
-      {/* Secciones que aparecen después - Mejoradas para móvil */}
+      {/* Segunda sección - Web/Visual */}
       <motion.div 
-        className={`min-h-screen flex ${isMobile ? 'flex-col' : 'flex-row'} w-full max-w-full relative z-20`}
+        id="projects"
+        className={`min-h-screen flex ${isMobile ? 'flex-col' : 'flex-row'} w-full max-w-full relative z-20 scroll-snap-align-start`}
         initial={{ opacity: 0, y: 50 }}
         animate={{ 
           opacity: showSections ? 1 : 0,
@@ -185,10 +160,9 @@ export default function Home() {
           whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.02)" }}
           transition={{ duration: 0.3 }}
         >
-          {/* Efecto de fondo sutil */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           
-          <Link href="/web" className="w-full h-full flex items-center justify-center relative z-10">
+          <a href="/web" className="w-full h-full flex items-center justify-center relative z-10">
             <motion.div
               className="text-center px-8"
               whileHover={{ scale: 1.05 }}
@@ -207,7 +181,7 @@ export default function Home() {
                 Proyectos web y desarrollo
               </p>
             </motion.div>
-          </Link>
+          </a>
         </motion.div>
 
         {/* Sección Visual */}
@@ -216,10 +190,9 @@ export default function Home() {
           whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.02)" }}
           transition={{ duration: 0.3 }}
         >
-          {/* Efecto de fondo sutil */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           
-          <Link href="/visual" className="w-full h-full flex items-center justify-center relative z-10">
+          <a href="#/visual" className="w-full h-full flex items-center justify-center relative z-10">
             <motion.div
               className="text-center px-8"
               whileHover={{ scale: 1.05 }}
@@ -238,96 +211,67 @@ export default function Home() {
                 Fotografía y arte digital
               </p>
             </motion.div>
-          </Link>
+          </a>
         </motion.div>
       </motion.div>
 
-      {/* Footer mejorado - Distribución vertical */}
-      {showFooter && (
-        <>
-          {/* Overlay oscuro */}
-          <div 
-            className="fixed inset-0 z-[90]"
-            style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            }}
-            onClick={() => setShowFooter(false)}
-          />
-          
-          {/* Footer azul eléctrico */}
-          <div
-            className="fixed left-0 right-0 z-[100] w-full h-full flex flex-col content-center items-center justify-center"
-            style={{
-              top: 0,
-              bottom: 0,
-              background: '#2b00ff',
-            }}
-          >
-          
-            <div className={`w-full max-w-4xl h-full ${isMobile ? 'px-8' : 'px-16'}`}>
-            <button
-              onClick={() => setShowFooter(false)}
-              className="fixed z-[110]  text-4xl "
+      {/* Tercera sección - Footer/Contacto */}
+      <footer 
+        id="contact"
+        className="w-full min-h-screen scroll-snap-align-start"
+        style={{ background: '#2b00ff' }}
+      >
+        <div className={`w-full max-w-5xl mx-auto h-full min-h-screen flex items-center ${isMobile ? 'px-12' : 'px-24'}`}>
+          <div className="flex flex-col items-center justify-center gap-16 w-full">
+            {/* Email */}
+            <motion.div 
+              className="flex flex-col items-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
             >
-              ×
-            </button> 
-              {/* Contenido distribuido verticalmente */}
-              <div className="flex flex-col h-full content-center items-center justify-center gap-12 pb-8">
-                
-                {/* Email */}
-                <div
-                className="pb-8">
-             
-                  <a 
-                    href="mailto:patricianieto2.0@gmail.com" 
-                    className={`text-white ${isMobile ? 'text-xl' : 'text-3xl'} font-light hover:text-white/70 transition-colors block break-all`}
-                  >
-                    patricianieto2.0@gmail.com
-                  </a>
-                </div>
+              <a 
+                href="mailto:patricianieto2.0@gmail.com" 
+                className={`text-white ${isMobile ? 'text-3xl' : 'text-5xl'} font-light hover:text-white/80 transition-colors block break-all text-center`}
+              >
+                patricianieto2.0@gmail.com
+              </a>
+            </motion.div>
+            <br/>
 
-                {/* Teléfono */}
-                <div>
-             
-                  <a 
-                    href="tel:+34625093694" 
-                    className={`text-white ${isMobile ? 'text-xl' : 'text-3xl'} font-light hover:text-white/70 transition-colors block`}
-                  >
-                    +34 625 093 694
-                  </a>
-                </div>
-
-                {/* Redes Sociales */}
-                <div>
-         
-                  <div className="flex flex-col gap-4">
-                    {[
-                      { name: 'GitHub', url: 'https://github.com' },
-                      { name: 'LinkedIn', url: 'https://linkedin.com' },
-                      { name: 'Instagram', url: 'https://instagram.com' }
-                    ].map((red) => (
-                      <a
-                        key={red.name}
-                        href={red.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`text-white ${isMobile ? 'text-lg' : 'text-2xl'} font-light hover:text-white/70 transition-all inline-flex items-center gap-3 hover:translate-x-2`}
-                      >
-                        {red.name} <span>→</span>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-
-              </div>
-    
-            </div>
-
-            {/* Botón cerrar - Simple */}
-       
+            {/* Redes Sociales */}
+            <motion.div 
+              className="flex flex-col items-center gap-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              {[
+                { name: 'GitHub', url: 'https://github.com/PatriNieto' },
+                { name: 'LinkedIn', url: 'https://www.linkedin.com/in/patricia-nieto-full-stack/' },
+                { name: 'Instagram', url: 'https://www.instagram.com/1068363_2/' }
+              ].map((red, index) => (
+                <motion.a
+                  key={red.name}
+                  href={red.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`text-white ${isMobile ? 'text-2xl' : 'text-4xl'} font-light hover:text-white/80 transition-all inline-flex items-center gap-3 group`}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ x: 10 }}
+                >
+                  {red.name} 
+                </motion.a>
+              ))}
+            </motion.div>
           </div>
-        </>
-      )}
+        </div>
+      </footer>
     </div>
   );
 }

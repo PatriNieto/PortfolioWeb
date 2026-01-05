@@ -19,6 +19,7 @@ html {
   overflow-y: auto;
   width: 100%;
   scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
   overscroll-behavior-y: none;
 }
 
