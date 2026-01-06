@@ -192,7 +192,7 @@ export default function Home() {
         >
           <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           
-          <a href="#/visual" className="w-full h-full flex items-center justify-center relative z-10">
+          <a href="/visual" className="w-full h-full flex items-center justify-center relative z-10">
             <motion.div
               className="text-center px-8"
               whileHover={{ scale: 1.05 }}
