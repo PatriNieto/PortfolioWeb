@@ -106,6 +106,90 @@ function Header({ animate = false }) {
   );
 }
 
+// Componente indicador de rotación
+function RotationIndicator() {
+  const [isMobile, setIsMobile] = useState(false);
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    const checkOrientation = () => {
+      if (window.screen?.orientation) {
+        setOrientation(window.screen.orientation.type.includes('landscape') ? 'landscape' : 'portrait');
+      } else {
+        // Fallback para navegadores que no soportan screen.orientation
+        setOrientation(window.innerWidth > window.innerHeight ? 'landscape' : 'portrait');
+      }
+    };
+
+    checkMobile();
+    checkOrientation();
+
+    window.addEventListener('resize', checkMobile);
+    window.addEventListener('orientationchange', checkOrientation);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('orientationchange', checkOrientation);
+    };
+  }, []);
+
+  // Solo mostrar si es móvil y está en horizontal
+  if (!isMobile || orientation !== 'landscape') {
+    return null;
+  }
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className="text-center text-white"
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        <motion.div
+          className="text-6xl mb-4"
+          animate={{ 
+            rotate: [0, 10, -10, 0],
+            scale: [1, 1.1, 1]
+          }}
+          transition={{ 
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          ↻
+        </motion.div>
+        <motion.h3
+          className="text-2xl font-light mb-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          Rota tu dispositivo
+        </motion.h3>
+        <motion.p
+          className="text-white/70 text-lg"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
+          Para una mejor experiencia, usa el modo vertical
+        </motion.p>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export default function Home() {
   const [showSections, setShowSections] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -139,6 +223,7 @@ export default function Home() {
   return (
     <div className="bg-black min-h-screen w-full overflow-x-hidden relative">
       <Header animate={true} />
+      <RotationIndicator />
 
       {/* Primera sección - Hero */}
       <div id="home" className="h-screen scroll-snap-align-start" />
