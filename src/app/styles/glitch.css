@@ -1,0 +1,410 @@
+/* Efecto Glitch Estroboscópico B&W para PATRICIA NIETO - Responsive */
+
+.glitch-text {
+  position: relative;
+  animation: strobe-flicker 3s infinite;
+  filter: blur(0px);
+  letter-spacing: 0.05em;
+}
+
+/* Capas de contorno blanco */
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+  text-stroke: 1px rgba(255, 255, 255, 0.8);
+}
+
+.glitch-text::before {
+  animation: outline-glitch-1 3s infinite, shake-letter-1 3s infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+  z-index: -1;
+}
+
+.glitch-text::after {
+  animation: outline-glitch-2 3s infinite, shake-letter-2 3s infinite;
+  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+  z-index: -1;
+}
+
+/* Efecto estroboscópico - letras se apagan y aparece el contorno */
+@keyframes strobe-flicker {
+  0%, 100% {
+    opacity: 1;
+    color: white;
+    text-shadow: 
+      0 0 20px rgba(255, 255, 255, 0.8),
+      0 0 40px rgba(255, 255, 255, 0.4);
+  }
+  
+  /* Primera ráfaga de parpadeos */
+  5% {
+    opacity: 0.3;
+    color: rgba(255, 255, 255, 0.2);
+    text-shadow: none;
+  }
+  6% {
+    opacity: 1;
+    color: white;
+  }
+  8% {
+    opacity: 0.2;
+    color: rgba(255, 255, 255, 0.1);
+  }
+  9% {
+    opacity: 1;
+    color: white;
+  }
+  11% {
+    opacity: 0.1;
+    color: transparent;
+    text-shadow: none;
+  }
+  12% {
+    opacity: 1;
+    color: white;
+  }
+  
+  /* Segunda ráfaga - más intensa */
+  40% {
+    opacity: 1;
+    color: white;
+  }
+  42% {
+    opacity: 0.2;
+    color: rgba(255, 255, 255, 0.1);
+    text-shadow: none;
+  }
+  43% {
+    opacity: 1;
+    color: white;
+  }
+  44% {
+    opacity: 0.1;
+    color: transparent;
+  }
+  45% {
+    opacity: 0.3;
+    color: rgba(255, 255, 255, 0.2);
+  }
+  46% {
+    opacity: 1;
+    color: white;
+  }
+  47% {
+    opacity: 0.15;
+    color: transparent;
+  }
+  48% {
+    opacity: 1;
+    color: white;
+  }
+  
+  /* Tercera ráfaga - más larga */
+  75% {
+    opacity: 1;
+    color: white;
+  }
+  77% {
+    opacity: 0.1;
+    color: transparent;
+  }
+  78% {
+    opacity: 0.4;
+    color: rgba(255, 255, 255, 0.3);
+  }
+  79% {
+    opacity: 0.1;
+    color: transparent;
+  }
+  80% {
+    opacity: 1;
+    color: white;
+  }
+  81% {
+    opacity: 0.2;
+    color: rgba(255, 255, 255, 0.1);
+  }
+  82% {
+    opacity: 1;
+    color: white;
+  }
+}
+
+/* Animación de contorno - aparece cuando la letra se apaga */
+@keyframes outline-glitch-1 {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(0, 0);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0);
+  }
+  
+  5% {
+    opacity: 0.9;
+    transform: translate(-2px, 1px);
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.9);
+  }
+  6% {
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.8;
+    transform: translate(1px, -1px);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+  }
+  9% {
+    opacity: 0;
+  }
+  11% {
+    opacity: 1;
+    transform: translate(-1px, 0);
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 1);
+  }
+  12% {
+    opacity: 0;
+  }
+  
+  42% {
+    opacity: 0.7;
+    transform: translate(2px, 0);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.7);
+  }
+  43% {
+    opacity: 0;
+  }
+  44% {
+    opacity: 0.9;
+    transform: translate(-2px, -1px);
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.9);
+  }
+  46% {
+    opacity: 0;
+  }
+  47% {
+    opacity: 0.8;
+    transform: translate(1px, 1px);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+  }
+  48% {
+    opacity: 0;
+  }
+  
+  77% {
+    opacity: 0.9;
+    transform: translate(-1px, 1px);
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.9);
+  }
+  78% {
+    opacity: 0.5;
+    transform: translate(1px, 0);
+  }
+  79% {
+    opacity: 0.9;
+    transform: translate(-2px, 0);
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 1);
+  }
+  82% {
+    opacity: 0;
+  }
+}
+
+@keyframes outline-glitch-2 {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(0, 0);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0);
+  }
+  
+  5% {
+    opacity: 0.8;
+    transform: translate(2px, -1px);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+  }
+  6% {
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.9;
+    transform: translate(-1px, 2px);
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.9);
+  }
+  9% {
+    opacity: 0;
+  }
+  11% {
+    opacity: 1;
+    transform: translate(1px, -1px);
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 1);
+  }
+  12% {
+    opacity: 0;
+  }
+  
+  42% {
+    opacity: 0.8;
+    transform: translate(-2px, 1px);
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.8);
+  }
+  43% {
+    opacity: 0;
+  }
+  44% {
+    opacity: 0.9;
+    transform: translate(2px, 1px);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.9);
+  }
+  46% {
+    opacity: 0;
+  }
+  47% {
+    opacity: 0.7;
+    transform: translate(-1px, -1px);
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.7);
+  }
+  48% {
+    opacity: 0;
+  }
+  
+  77% {
+    opacity: 0.9;
+    transform: translate(2px, -1px);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.9);
+  }
+  78% {
+    opacity: 0.6;
+    transform: translate(-1px, 1px);
+  }
+  79% {
+    opacity: 1;
+    transform: translate(2px, 0);
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 1);
+  }
+  82% {
+    opacity: 0;
+  }
+}
+
+/* Temblor individual de letras - baja y tiembla */
+@keyframes shake-letter-1 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  5% {
+    transform: translate(-2px, 3px) rotate(-1deg);
+  }
+  8% {
+    transform: translate(1px, 2px) rotate(0.5deg);
+  }
+  11% {
+    transform: translate(-1px, 4px) rotate(-0.5deg);
+  }
+  42% {
+    transform: translate(2px, 2px) rotate(1deg);
+  }
+  44% {
+    transform: translate(-2px, 3px) rotate(-1deg);
+  }
+  47% {
+    transform: translate(1px, 5px) rotate(0.5deg);
+  }
+  77% {
+    transform: translate(-1px, 3px) rotate(-0.5deg);
+  }
+  79% {
+    transform: translate(2px, 4px) rotate(1deg);
+  }
+}
+
+@keyframes shake-letter-2 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  5% {
+    transform: translate(2px, 2px) rotate(0.5deg);
+  }
+  8% {
+    transform: translate(-1px, 4px) rotate(-1deg);
+  }
+  11% {
+    transform: translate(1px, 3px) rotate(0.5deg);
+  }
+  42% {
+    transform: translate(-2px, 3px) rotate(-0.5deg);
+  }
+  44% {
+    transform: translate(2px, 5px) rotate(1deg);
+  }
+  47% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  77% {
+    transform: translate(1px, 4px) rotate(0.5deg);
+  }
+  79% {
+    transform: translate(-2px, 3px) rotate(-1deg);
+  }
+}
+
+/* Variante hover - más intensa y rápida */
+.glitch-text--hover::before,
+.glitch-text--hover::after {
+  animation: none;
+  opacity: 0;
+}
+
+.glitch-text--hover {
+  animation: none;
+}
+
+.glitch-text--hover:hover {
+  animation: strobe-flicker 0.8s infinite;
+}
+
+.glitch-text--hover:hover::before {
+  animation: outline-glitch-1 0.8s infinite, shake-letter-1 0.8s infinite;
+}
+
+.glitch-text--hover:hover::after {
+  animation: outline-glitch-2 0.8s infinite, shake-letter-2 0.8s infinite;
+}
+
+/* RESPONSIVE - Móvil más sutil */
+@media (max-width: 768px) {
+  .glitch-text::before,
+  .glitch-text::after {
+    -webkit-text-stroke: 0.8px rgba(255, 255, 255, 0.8);
+  }
+  
+  /* Temblor más suave en móvil */
+  @keyframes shake-letter-1 {
+    0%, 100% {
+      transform: translate(0, 0);
+    }
+    5%, 8%, 11%, 42%, 44%, 47%, 77%, 79% {
+      transform: translate(-1px, 2px);
+    }
+  }
+  
+  @keyframes shake-letter-2 {
+    0%, 100% {
+      transform: translate(0, 0);
+    }
+    5%, 8%, 11%, 42%, 44%, 47%, 77%, 79% {
+      transform: translate(1px, 2px);
+    }
+  }
+}
+
+/* Pantallas grandes - efecto más dramático */
+@media (min-width: 1920px) {
+  .glitch-text::before,
+  .glitch-text::after {
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.9);
+  }
+}
