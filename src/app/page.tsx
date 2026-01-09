@@ -360,19 +360,19 @@ export default function Home() {
       {/* Contenedor principal - Todo en una pantalla */}
       <div 
         id="home"
-        className="min-h-screen w-full flex flex-col"
+        className={`min-h-screen w-full flex flex-col ${isMobile ? 'pt-24' : ''}`}
       >
         {/* Sección superior - Web/Visual en la misma vista */}
         <motion.div 
           id="projects"
-          className={`flex-1 flex ${isMobile ? 'flex-col' : 'flex-row'} w-full`}
+          className={`flex-1 flex ${isMobile ? 'flex-col' : 'flex-row'} w-full ${isMobile ? 'justify-center' : ''}`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.8 }}
         >
           {/* Sección Web */}
           <motion.div 
-            className={`flex-1 flex items-center justify-center ${isMobile ? 'min-h-[40vh]' : ''} w-full ${!isMobile ? 'border-r border-white/10' : 'border-b border-white/10'} relative overflow-hidden group`}
+            className={`flex-1 flex items-center justify-center ${isMobile ? 'min-h-[35vh]' : ''} w-full ${!isMobile ? 'border-r border-white/10' : 'border-b border-white/10'} relative overflow-hidden group`}
             whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.02)" }}
             transition={{ duration: 0.3 }}
           >
@@ -401,7 +401,7 @@ export default function Home() {
 
           {/* Sección Visual */}
           <motion.div 
-            className={`flex-1 flex items-center justify-center ${isMobile ? 'min-h-[40vh]' : ''} w-full relative overflow-hidden group`}
+            className={`flex-1 flex items-center justify-center ${isMobile ? 'min-h-[35vh]' : ''} w-full relative overflow-hidden group`}
             whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.02)" }}
             transition={{ duration: 0.3 }}
           >
@@ -432,14 +432,14 @@ export default function Home() {
         {/* Sección inferior - Footer/Contacto */}
         <motion.footer 
           id="contact"
-          className="w-full py-16"
+          className={`w-full ${isMobile ? 'py-8' : 'py-16'}`}
           style={{ background: '#2b00ff' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.2 }}
         >
-          <div className={`w-full max-w-5xl mx-auto flex items-center ${isMobile ? 'px-8' : 'px-24'}`}>
-            <div className="flex flex-col items-center justify-center gap-8 w-full">
+          <div className={`w-full max-w-5xl mx-auto flex items-center ${isMobile ? 'px-6' : 'px-24'}`}>
+            <div className="flex flex-col items-center justify-center gap-6 w-full">
               {/* Email */}
               <motion.div 
                 className="flex flex-col items-center"
