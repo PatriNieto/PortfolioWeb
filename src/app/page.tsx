@@ -190,8 +190,8 @@ function GlitchText({ text, className = "" }: GlitchTextProps) {
             className="glitch-char"
             data-char={char}
             style={{
-              '--delay': `${Math.random() * 5}s`,
-              '--duration': `${0.6 + Math.random() * 0.8}s`
+              ['--delay' as any]: `${Math.random() * 5}s`,
+              ['--duration' as any]: `${0.6 + Math.random() * 0.8}s`
             }}
           >
             {char}
