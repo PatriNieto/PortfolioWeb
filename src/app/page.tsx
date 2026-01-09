@@ -3,7 +3,12 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
-function GlitchText({ text, className = "" }) {
+interface GlitchTextProps {
+  text: string;
+  className?: string;
+}
+
+function GlitchText({ text, className = "" }: GlitchTextProps) {
   return (
     <>
       <style>{`
