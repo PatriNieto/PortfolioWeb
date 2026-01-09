@@ -360,19 +360,19 @@ export default function Home() {
       {/* Contenedor principal - Todo en una pantalla */}
       <div 
         id="home"
-        className={`min-h-screen w-full flex flex-col ${isMobile ? 'pt-24' : ''}`}
+        className={`min-h-screen w-full flex flex-col ${isMobile ? 'justify-center py-20' : ''}`}
       >
         {/* Sección superior - Web/Visual en la misma vista */}
         <motion.div 
           id="projects"
-          className={`flex-1 flex ${isMobile ? 'flex-col' : 'flex-row'} w-full ${isMobile ? 'justify-center' : ''}`}
+          className={`${isMobile ? 'flex-none' : 'flex-1'} flex ${isMobile ? 'flex-col' : 'flex-row'} w-full`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.8 }}
         >
           {/* Sección Web */}
           <motion.div 
-            className={`flex-1 flex items-center justify-center ${isMobile ? 'min-h-[35vh]' : ''} w-full ${!isMobile ? 'border-r border-white/10' : 'border-b border-white/10'} relative overflow-hidden group`}
+            className={`flex items-center justify-center ${isMobile ? 'h-[30vh]' : 'flex-1'} w-full ${!isMobile ? 'border-r border-white/10' : 'border-b border-white/10'} relative overflow-hidden group`}
             whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.02)" }}
             transition={{ duration: 0.3 }}
           >
@@ -401,7 +401,7 @@ export default function Home() {
 
           {/* Sección Visual */}
           <motion.div 
-            className={`flex-1 flex items-center justify-center ${isMobile ? 'min-h-[35vh]' : ''} w-full relative overflow-hidden group`}
+            className={`flex items-center justify-center ${isMobile ? 'h-[30vh]' : 'flex-1'} w-full relative overflow-hidden group`}
             whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.02)" }}
             transition={{ duration: 0.3 }}
           >
@@ -432,14 +432,14 @@ export default function Home() {
         {/* Sección inferior - Footer/Contacto */}
         <motion.footer 
           id="contact"
-          className={`w-full ${isMobile ? 'py-8' : 'py-16'}`}
+          className={`w-full ${isMobile ? 'flex-none py-6' : 'py-16'}`}
           style={{ background: '#2b00ff' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.2 }}
         >
           <div className={`w-full max-w-5xl mx-auto flex items-center ${isMobile ? 'px-6' : 'px-24'}`}>
-            <div className="flex flex-col items-center justify-center gap-6 w-full">
+            <div className={`flex flex-col items-center justify-center ${isMobile ? 'gap-4' : 'gap-8'} w-full`}>
               {/* Email */}
               <motion.div 
                 className="flex flex-col items-center"
@@ -449,7 +449,7 @@ export default function Home() {
               >
                 <a 
                   href="mailto:patricianieto2.0@gmail.com" 
-                  className={`text-white ${isMobile ? 'text-2xl' : 'text-4xl'} font-light hover:text-white/80 transition-colors block break-all text-center`}
+                  className={`text-white ${isMobile ? 'text-xl' : 'text-4xl'} font-light hover:text-white/80 transition-colors block break-all text-center`}
                 >
                   patricianieto2.0@gmail.com
                 </a>
@@ -457,7 +457,7 @@ export default function Home() {
 
               {/* Redes Sociales */}
               <motion.div 
-                className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-center gap-6`}
+                className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-center ${isMobile ? 'gap-3' : 'gap-6'}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.6 }}
@@ -472,7 +472,7 @@ export default function Home() {
                     href={red.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`text-white ${isMobile ? 'text-xl' : 'text-2xl'} font-light hover:text-white/80 transition-all inline-flex items-center gap-3 group`}
+                    className={`text-white ${isMobile ? 'text-lg' : 'text-2xl'} font-light hover:text-white/80 transition-all inline-flex items-center gap-3 group`}
                     whileHover={{ x: 10 }}
                   >
                     {red.name}
