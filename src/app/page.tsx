@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 interface GlitchTextProps {
   text: string;
@@ -9,11 +9,27 @@ interface GlitchTextProps {
 }
 
 function GlitchText({ text, className = "" }: GlitchTextProps) {
+  const [mounted, setMounted] = useState(false);
+  
+  // Generar valores aleatorios solo en el cliente
+  const randomValues = useMemo(() => {
+    if (!mounted) return text.split('').map(() => ({ delay: 0, duration: 1 }));
+    return text.split('').map(() => ({
+      delay: Math.random() * 5,
+      duration: 0.6 + Math.random() * 0.8
+    }));
+  }, [text, mounted]);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <>
       <style>{`
         .glitch-container {
-          display: inline-block;
+          display: inline-flex;
+          justify-content: center;
           position: relative;
           white-space: nowrap;
         }
@@ -190,8 +206,8 @@ function GlitchText({ text, className = "" }: GlitchTextProps) {
             className="glitch-char"
             data-char={char}
             style={{
-              ['--delay' as any]: `${Math.random() * 5}s`,
-              ['--duration' as any]: `${0.6 + Math.random() * 0.8}s`
+              ['--delay' as any]: `${randomValues[index].delay}s`,
+              ['--duration' as any]: `${randomValues[index].duration}s`
             }}
           >
             {char}
@@ -204,8 +220,10 @@ function GlitchText({ text, className = "" }: GlitchTextProps) {
 
 function Header() {
   const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -214,41 +232,41 @@ function Header() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  if (!mounted) return null;
+
   return (
     <>
       {isMobile ? (
-        <div className="fixed top-8 left-0 right-0 z-50 pointer-events-none">
-          <a href="#home" className="pointer-events-auto flex justify-center">
+        <header className="fixed top-8 left-0 right-0 z-50 flex justify-center items-center px-4 w-full">
+          <a href="/" className="block w-full max-w-max mx-auto text-center">
             <motion.h1
               className="text-white leading-none font-light text-center cursor-pointer select-none"
               style={{ 
-                fontSize: 'clamp(1.5rem, 6vw, 3rem)',
+                fontSize: 'clamp(1.2rem, 6vw, 2.2rem)',
                 whiteSpace: 'nowrap'
               }}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
               whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               <GlitchText text="PATRICIA NIETO" />
             </motion.h1>
           </a>
-        </div>
+        </header>
       ) : (
-        <div className="fixed top-8 left-8 z-50 pointer-events-none">
-          <a href="#home" className="pointer-events-auto">
+        <div className="fixed top-8 left-8 z-50">
+          <a href="/">
             <motion.h1
               className="text-white leading-none font-light text-left cursor-pointer select-none"
               style={{ 
                 fontSize: 'clamp(1.5rem, 2.5vw, 3rem)',
                 whiteSpace: 'nowrap'
               }}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.3 }}
               whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               <GlitchText text="PATRICIA NIETO" />
             </motion.h1>
@@ -385,14 +403,14 @@ export default function Home() {
                 transition={{ duration: 0.3 }}
               >
                 <motion.h2 
-                  className={`${isMobile ? 'text-[2.5rem]' : 'text-[3rem]'} text-white font-light mb-4 tracking-wider`}
+                  className={`${isMobile ? 'text-[2rem]' : 'text-[3rem]'} text-white font-light mb-4 tracking-wider`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 1 }}
                 >     
                   WEB
                 </motion.h2>
-                <p className={`text-white/60 ${isMobile ? 'text-lg' : 'text-xl md:text-2xl'} leading-relaxed`}>
+                <p className={`text-white/60 ${isMobile ? 'text-base' : 'text-xl md:text-2xl'} leading-relaxed`}>
                   Proyectos web y desarrollo
                 </p>
               </motion.div>
@@ -414,14 +432,14 @@ export default function Home() {
                 transition={{ duration: 0.3 }}
               >
                 <motion.h2 
-                  className={`${isMobile ? 'text-[2.5rem]' : 'text-[3rem]'} text-white font-light mb-4 tracking-wider`}
+                  className={`${isMobile ? 'text-[2rem]' : 'text-[3rem]'} text-white font-light mb-4 tracking-wider`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 1.1 }}
                 >    
                   VISUAL
                 </motion.h2>
-                <p className={`text-white/60 ${isMobile ? 'text-lg' : 'text-xl md:text-2xl'} leading-relaxed`}>
+                <p className={`text-white/60 ${isMobile ? 'text-base' : 'text-xl md:text-2xl'} leading-relaxed`}>
                   Fotografía y arte digital
                 </p>
               </motion.div>
