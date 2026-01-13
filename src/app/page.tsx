@@ -403,7 +403,7 @@ export default function Home() {
                 transition={{ duration: 0.3 }}
               >
                 <motion.h2 
-                  className={`${isMobile ? 'text-[2rem]' : 'text-[3rem]'} text-white font-light mb-4 tracking-wider`}
+                  className={`${isMobile ? 'text-[2rem]' : 'text-[5rem]'} text-white font-light mb-4 tracking-wider`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 1 }}
@@ -432,7 +432,7 @@ export default function Home() {
                 transition={{ duration: 0.3 }}
               >
                 <motion.h2 
-                  className={`${isMobile ? 'text-[2rem]' : 'text-[3rem]'} text-white font-light mb-4 tracking-wider`}
+                  className={`${isMobile ? 'text-[2rem]' : 'text-[5rem]'} text-white font-light mb-4 tracking-wider`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 1.1 }}
@@ -474,8 +474,9 @@ export default function Home() {
               </motion.div>
 
               {/* Redes Sociales */}
+           
               <motion.div 
-                className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-center ${isMobile ? 'gap-3' : 'gap-6'}`}
+                className={`flex ${isMobile ? 'flex-col' : 'flex-row'} w-1/2 justify-between ${isMobile ? 'gap-3' : 'gap-6'}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.6 }}
@@ -490,7 +491,7 @@ export default function Home() {
                     href={red.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`text-white ${isMobile ? 'text-lg' : 'text-2xl'} font-light hover:text-white/80 transition-all inline-flex items-center gap-3 group`}
+                    className={`text-white font-light flex transition-all inline-flex items-center gap-8 group ${isMobile ? 'text-[2rem]': 'text-[2rem]'}`}
                     whileHover={{ x: 10 }}
                   >
                     {red.name}

@@ -2,13 +2,288 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
-// Importa el Header compartido
-// import Header from "@/components/Header";
 
-// Por ahora simulo el Header aquí para que funcione en el artifact
-function Header({ animate = false }) {
+interface GlitchTextProps {
+  text: string;
+  className?: string;
+}
+
+function GlitchText({ text, className = "" }: GlitchTextProps) {
+  const [mounted, setMounted] = useState(false);
+  
+  // Generar valores aleatorios solo en el cliente
+  const randomValues = useMemo(() => {
+    if (!mounted) return text.split('').map(() => ({ delay: 0, duration: 1 }));
+    return text.split('').map(() => ({
+      delay: Math.random() * 5,
+      duration: 0.6 + Math.random() * 0.8
+    }));
+  }, [text, mounted]);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  return (
+    <>
+      <style>{`
+        .glitch-container {
+          display: inline-flex;
+          justify-content: center;
+          position: relative;
+          white-space: nowrap;
+        }
+
+        .glitch-char {
+          display: inline-block;
+          position: relative;
+          animation: strobe-random var(--duration) infinite;
+          animation-delay: var(--delay);
+          white-space: pre;
+        }
+
+        .glitch-char::before,
+        .glitch-char::after {
+          content: attr(data-char);
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          color: transparent;
+          -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.9);
+          text-stroke: 1.5px rgba(255, 255, 255, 0.9);
+          opacity: 0;
+        }
+
+        .glitch-char::before {
+          animation: outline-random-1 var(--duration) infinite;
+          animation-delay: var(--delay);
+        }
+
+        .glitch-char::after {
+          animation: outline-random-2 var(--duration) infinite;
+          animation-delay: var(--delay);
+        }
+
+        @keyframes strobe-random {
+          0%, 100% {
+            opacity: 1;
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            transform: translate(0, 0) rotate(0deg);
+          }
+          
+          10% {
+            opacity: 0.2;
+            color: rgba(255, 255, 255, 0.1);
+            text-shadow: none;
+            transform: translate(-1px, 2px) rotate(-2deg);
+          }
+          11% {
+            opacity: 1;
+            color: white;
+            transform: translate(0, 0) rotate(0deg);
+          }
+          13% {
+            opacity: 0.1;
+            color: transparent;
+            text-shadow: none;
+            transform: translate(1px, 3px) rotate(1deg);
+          }
+          14% {
+            opacity: 0.3;
+            color: rgba(255, 255, 255, 0.2);
+            transform: translate(-2px, 4px) rotate(-1deg);
+          }
+          15% {
+            opacity: 1;
+            color: white;
+            transform: translate(0, 0) rotate(0deg);
+          }
+          17% {
+            opacity: 0.15;
+            color: transparent;
+            transform: translate(2px, 5px) rotate(2deg);
+          }
+          18% {
+            opacity: 1;
+            color: white;
+            transform: translate(0, 0) rotate(0deg);
+          }
+        }
+
+        @keyframes outline-random-1 {
+          0%, 100% {
+            opacity: 0;
+            transform: translate(0, 0) rotate(0deg);
+          }
+          
+          10% {
+            opacity: 0.9;
+            transform: translate(-2px, 3px) rotate(-2deg);
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 1);
+          }
+          11% {
+            opacity: 0;
+          }
+          13% {
+            opacity: 1;
+            transform: translate(1px, 4px) rotate(1deg);
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.9);
+          }
+          14% {
+            opacity: 0.6;
+            transform: translate(-1px, 5px) rotate(-1deg);
+          }
+          15% {
+            opacity: 0;
+          }
+          17% {
+            opacity: 0.8;
+            transform: translate(2px, 6px) rotate(2deg);
+            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.8);
+          }
+          18% {
+            opacity: 0;
+          }
+        }
+
+        @keyframes outline-random-2 {
+          0%, 100% {
+            opacity: 0;
+            transform: translate(0, 0) rotate(0deg);
+          }
+          
+          10% {
+            opacity: 0.8;
+            transform: translate(2px, 2px) rotate(1deg);
+            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.8);
+          }
+          11% {
+            opacity: 0;
+          }
+          13% {
+            opacity: 0.9;
+            transform: translate(-2px, 4px) rotate(-2deg);
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 1);
+          }
+          14% {
+            opacity: 0.5;
+            transform: translate(1px, 5px) rotate(1deg);
+          }
+          15% {
+            opacity: 0;
+          }
+          17% {
+            opacity: 0.7;
+            transform: translate(-1px, 6px) rotate(-1deg);
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.7);
+          }
+          18% {
+            opacity: 0;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .glitch-char::before,
+          .glitch-char::after {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+          }
+        }
+
+        @media (min-width: 1920px) {
+          .glitch-char::before,
+          .glitch-char::after {
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.9);
+          }
+        }
+      `}</style>
+      <span className={`glitch-container ${className}`}>
+        {text.split('').map((char, index) => (
+          <span
+            key={index}
+            className="glitch-char"
+            data-char={char}
+            style={{
+              ['--delay' as any]: `${randomValues[index].delay}s`,
+              ['--duration' as any]: `${randomValues[index].duration}s`
+            }}
+          >
+            {char}
+          </span>
+        ))}
+      </span>
+    </>
+  );
+}
+
+
+function Header() {
+  const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  if (!mounted) return null;
+
+  return (
+    <>
+      {isMobile ? (
+        <header className="fixed top-8 left-0 right-0 z-50 flex justify-center items-center px-4 w-full">
+          <a href="/" className="block w-full max-w-max mx-auto text-center">
+            <motion.h1
+              className="text-white leading-none font-light text-center cursor-pointer select-none"
+              style={{ 
+                fontSize: 'clamp(1.2rem, 6vw, 2.2rem)',
+                whiteSpace: 'nowrap'
+              }}
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <GlitchText text="PATRICIA NIETO" />
+            </motion.h1>
+          </a>
+        </header>
+      ) : (
+        <div className="fixed top-8 left-8 z-50">
+          <a href="/">
+            <motion.h1
+              className="text-white leading-none font-light text-left cursor-pointer select-none"
+              style={{ 
+                fontSize: 'clamp(1.5rem, 2.5vw, 3rem)',
+                whiteSpace: 'nowrap'
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.3 }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <GlitchText text="PATRICIA NIETO" />
+            </motion.h1>
+          </a>
+        </div>
+      )}
+    </>
+  );
+}
+
+
+
+
+/* function Header({ animate = false }) {
   const [isMobile, setIsMobile] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [windowHeight, setWindowHeight] = useState(0);
@@ -107,7 +382,7 @@ function Header({ animate = false }) {
       )}
     </>
   );
-}
+} */
 
 export default function WebPage() {
   const [selectedTech, setSelectedTech] = useState<string | null>(null);
@@ -167,8 +442,7 @@ export default function WebPage() {
 
   return (
     <div className="bg-black min-h-screen overflow-x-hidden">
-      {/* Header sin animación - estado final fijo */}
-      <Header animate={false} />
+        <Header />
 
       {/* Proyectos - Nueva sección */}
       <div className="min-h-screen bg-black px-8 pt-[6.5rem] md:px-2 md:pt-20 overflow-x-hidden">
