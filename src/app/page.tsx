@@ -447,19 +447,22 @@ export default function Home() {
         </motion.div>
 
         {/* Footer fijo en la parte inferior */}
-        <motion.footer 
+
+      </div>
+      <motion.footer 
           id="contact"
-          className={` w-full z-50 ${isMobile ? 'py-6' : 'py-16'}`}
+          className={` w-full z-50 pb-10 ${isMobile ? 'py-6' : 'py-16'}`}
           style={{ background: '#2b00ff' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.2 }}
         >
           <div className={`w-full max-w-5xl mx-auto flex items-center  ${isMobile ? 'px-6' : 'px-24'}`}>
-            <div className={`flex flex-col items-center justify-center  ${isMobile ? 'gap-4' : 'gap-8'} w-full`}>
+            <div className={`flex flex-col items-center justify-center  ${isMobile ? 'py-[16]' : 'py-[16]'} w-full`}>
               {/* Email */}
               <motion.div 
-                className="flex flex-col items-center"
+              className={`flex flex-col items-center  ${isMobile ? 'py-[16]' : 'py-[16]'} `}
+           
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.4 }}
@@ -474,7 +477,7 @@ export default function Home() {
 
               {/* Redes Sociales */}
               <motion.div 
-                className={`flex ${isMobile ? 'flex-col' : 'flex-row'} w-1/2 justify-between ${isMobile ? 'gap-3' : 'gap-6'}`}
+                className={`flex  w-1/2 justify-between ${isMobile ? 'gap-3 flex-col' : 'gap-6 flex-row'}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.6 }}
@@ -489,7 +492,7 @@ export default function Home() {
                     href={red.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`text-white font-light flex transition-all inline-flex items-center gap-8 group ${isMobile ? 'text-[2rem]': 'text-[2rem]'}`}
+                    className={`text-white font-light flex transition-all inline-flex justify-center gap-8 group ${isMobile ? 'text-[1rem]': 'text-[2rem]'}`}
                     whileHover={{ x: 10 }}
                   >
                     {red.name}
@@ -499,7 +502,6 @@ export default function Home() {
             </div>
           </div>
         </motion.footer>
-      </div>
     </div>
   );
 }
