@@ -11,7 +11,6 @@ interface GlitchTextProps {
 function GlitchText({ text, className = "" }: GlitchTextProps) {
   const [mounted, setMounted] = useState(false);
   
-  // Generar valores aleatorios solo en el cliente
   const randomValues = useMemo(() => {
     if (!mounted) return text.split('').map(() => ({ delay: 0, duration: 1 }));
     return text.split('').map(() => ({
@@ -375,22 +374,22 @@ export default function Home() {
       <Header />
       <RotationIndicator />
 
-      {/* Contenedor principal - Todo en una pantalla */}
+      {/* Contenedor principal */}
       <div 
         id="home"
-        className={`min-h-screen w-full flex flex-col ${isMobile ? 'justify-center py-20' : ''}`}
+        className={`min-h-screen w-full flex flex-col ${isMobile ? 'pt-24' : ''}`}
       >
-        {/* Sección superior - Web/Visual en la misma vista */}
+        {/* Sección superior - Web/Visual */}
         <motion.div 
           id="projects"
-          className={`${isMobile ? 'flex-none' : 'flex-1'} flex ${isMobile ? 'flex-col' : 'flex-row'} w-full`}
+          className={`flex-1 flex ${isMobile ? 'flex-col' : 'flex-row'} w-full ${isMobile ? 'mb-48' : 'mb-64'}`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.8 }}
         >
           {/* Sección Web */}
           <motion.div 
-            className={`flex items-center justify-center ${isMobile ? 'h-[30vh]' : 'flex-1'} w-full ${!isMobile ? 'border-r border-white/10' : 'border-b border-white/10'} relative overflow-hidden group`}
+            className={`flex items-center justify-center flex-1 w-full ${!isMobile ? 'border-r border-white/10' : 'border-b border-white/10'} relative overflow-hidden group`}
             whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.02)" }}
             transition={{ duration: 0.3 }}
           >
@@ -419,7 +418,7 @@ export default function Home() {
 
           {/* Sección Visual */}
           <motion.div 
-            className={`flex items-center justify-center ${isMobile ? 'h-[30vh]' : 'flex-1'} w-full relative overflow-hidden group`}
+            className="flex items-center justify-center flex-1 w-full relative overflow-hidden group"
             whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.02)" }}
             transition={{ duration: 0.3 }}
           >
@@ -447,17 +446,17 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
-        {/* Sección inferior - Footer/Contacto */}
+        {/* Footer fijo en la parte inferior */}
         <motion.footer 
           id="contact"
-          className={`w-full ${isMobile ? 'flex-none py-6' : 'py-16'}`}
+          className={` w-full z-50 ${isMobile ? 'py-6' : 'py-16'}`}
           style={{ background: '#2b00ff' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.2 }}
         >
-          <div className={`w-full max-w-5xl mx-auto flex items-center ${isMobile ? 'px-6' : 'px-24'}`}>
-            <div className={`flex flex-col items-center justify-center ${isMobile ? 'gap-4' : 'gap-8'} w-full`}>
+          <div className={`w-full max-w-5xl mx-auto flex items-center  ${isMobile ? 'px-6' : 'px-24'}`}>
+            <div className={`flex flex-col items-center justify-center  ${isMobile ? 'gap-4' : 'gap-8'} w-full`}>
               {/* Email */}
               <motion.div 
                 className="flex flex-col items-center"
@@ -474,7 +473,6 @@ export default function Home() {
               </motion.div>
 
               {/* Redes Sociales */}
-           
               <motion.div 
                 className={`flex ${isMobile ? 'flex-col' : 'flex-row'} w-1/2 justify-between ${isMobile ? 'gap-3' : 'gap-6'}`}
                 initial={{ opacity: 0, y: 20 }}
@@ -485,7 +483,7 @@ export default function Home() {
                   { name: 'GitHub', url: 'https://github.com/PatriNieto' },
                   { name: 'LinkedIn', url: 'https://www.linkedin.com/in/patricia-nieto-full-stack/' },
                   { name: 'Instagram', url: 'https://www.instagram.com/1068363_2/' }
-                ].map((red, index) => (
+                ].map((red) => (
                   <motion.a
                     key={red.name}
                     href={red.url}
