@@ -19,6 +19,11 @@ export const metadata: Metadata = {
   description: "Patricia Nieto es una artista visual que explora la intersección entre fotografía y computer graphics, creando obras que fusionan lo analógico y lo digital en una práctica post-disciplinaria.",
   keywords: ["Patricia Nieto", "artista visual", "fotografía", "computer graphics", "arte digital", "post-disciplinario"],
   authors: [{ name: "Patricia Nieto" }],
+  icons: {
+    icon: [
+      { url: '/PAtriFavi.png' },
+
+    ]},
   openGraph: {
     title: "Patricia Nieto",
     description: "Patricia Nieto es una artista visual que explora la intersección entre fotografía y computer graphics, creando obras que fusionan lo analógico y lo digital en una práctica post-disciplinaria.",

@@ -7,9 +7,9 @@ interface GlitchTextProps {
   text: string;
   className?: string;
 }
-
 function GlitchText({ text, className = "" }: GlitchTextProps) {
   const [mounted, setMounted] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   
   const randomValues = useMemo(() => {
     if (!mounted) return text.split('').map(() => ({ delay: 0, duration: 1 }));
@@ -21,6 +21,27 @@ function GlitchText({ text, className = "" }: GlitchTextProps) {
 
   useEffect(() => {
     setMounted(true);
+    
+    // Activar animación al montar
+    setIsAnimating(true);
+    
+    // Desactivar después de 3 segundos (duración aproximada de la animación)
+    const initialTimeout = setTimeout(() => {
+      setIsAnimating(false);
+    }, 3000);
+    
+    // Repetir cada 60 segundos
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setIsAnimating(false);
+      }, 3000);
+    }, 60000); // 60000ms = 1 minuto
+    
+    return () => {
+      clearTimeout(initialTimeout);
+      clearInterval(interval);
+    };
   }, []);
 
   return (
@@ -36,9 +57,16 @@ function GlitchText({ text, className = "" }: GlitchTextProps) {
         .glitch-char {
           display: inline-block;
           position: relative;
+          white-space: pre;
+          opacity: 1;
+          color: white;
+          text-shadow: none;
+          transform: translate(0, 0) rotate(0deg);
+        }
+        
+        .glitch-char.active {
           animation: strobe-random var(--duration) infinite;
           animation-delay: var(--delay);
-          white-space: pre;
         }
 
         .glitch-char::before,
@@ -53,6 +81,12 @@ function GlitchText({ text, className = "" }: GlitchTextProps) {
           -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.9);
           text-stroke: 1.5px rgba(255, 255, 255, 0.9);
           opacity: 0;
+          display: none;
+        }
+        
+        .glitch-char.active::before,
+        .glitch-char.active::after {
+          display: block;
         }
 
         .glitch-char::before {
@@ -202,7 +236,7 @@ function GlitchText({ text, className = "" }: GlitchTextProps) {
         {text.split('').map((char, index) => (
           <span
             key={index}
-            className="glitch-char"
+            className={`glitch-char ${isAnimating ? 'active' : ''}`}
             data-char={char}
             style={{
               ['--delay' as any]: `${randomValues[index].delay}s`,
@@ -216,6 +250,7 @@ function GlitchText({ text, className = "" }: GlitchTextProps) {
     </>
   );
 }
+
 
 function Header() {
   const [isMobile, setIsMobile] = useState(false);
@@ -237,6 +272,7 @@ function Header() {
     <>
       {isMobile ? (
         <header className="fixed top-8 left-0 right-0 z-50 flex justify-center items-center px-4 w-full">
+
           <a href="/" className="block w-full max-w-max mx-auto text-center">
             <motion.h1
               className="text-white leading-none font-light text-center cursor-pointer select-none"
@@ -458,22 +494,8 @@ export default function Home() {
           transition={{ duration: 1, delay: 1.2 }}
         >
           <div className={`w-full max-w-5xl mx-auto flex items-center  ${isMobile ? 'px-6' : 'px-24'}`}>
-            <div className={`flex flex-col items-center justify-center  ${isMobile ? 'py-[16]' : 'py-[16]'} w-full`}>
-              {/* Email */}
-              <motion.div 
-              className={`flex flex-col items-center  ${isMobile ? 'py-[16]' : 'py-[16]'} `}
-           
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1.4 }}
-              >
-                <a 
-                  href="mailto:patricianieto2.0@gmail.com" 
-                  className={`text-white ${isMobile ? 'text-xl' : 'text-4xl'} font-light hover:text-white/80 transition-colors block break-all text-center`}
-                >
-                  patricianieto2.0@gmail.com
-                </a>
-              </motion.div>
+            <div className={`flex flex-col items-center justify-center  ${isMobile ? 'py-[16]' : 'py-[18]'} w-full`}>
+       
 
               {/* Redes Sociales */}
               <motion.div 
@@ -485,7 +507,10 @@ export default function Home() {
                 {[
                   { name: 'GitHub', url: 'https://github.com/PatriNieto' },
                   { name: 'LinkedIn', url: 'https://www.linkedin.com/in/patricia-nieto-full-stack/' },
-                  { name: 'Instagram', url: 'https://www.instagram.com/1068363_2/' }
+                  { name: 'Instagram', url: 'https://www.instagram.com/1068363_2/' },
+                  { name: 'Email', url: 'mailto:patricianieto2.0@gmail.com' }
+
+        
                 ].map((red) => (
                   <motion.a
                     key={red.name}
