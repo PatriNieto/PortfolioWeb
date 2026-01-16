@@ -12,6 +12,22 @@ interface GlitchTextProps {
   text: string;
   className?: string;
 }
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  return isMobile;
+}
+
 function GlitchText({ text, className = "" }: GlitchTextProps) {
   const [mounted, setMounted] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -259,17 +275,11 @@ function GlitchText({ text, className = "" }: GlitchTextProps) {
 
 
 function Header() {
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   if (!mounted) return null;
@@ -318,6 +328,8 @@ function Header() {
 }
 
 export default function VisualPage() {
+
+  const isMobile = useIsMobile();
   const projects = [
     {
       title: "PortfolioF",
@@ -373,8 +385,8 @@ export default function VisualPage() {
             className="text-center mb-40"
           >
             <h2
-              className="text-white leading-none font-light tracking-normal md:tracking-wide giant-text mb-20 mt-8 md:mt-20"
-              style={{ textShadow: '0 0 30px rgba(255,255,255,0.3)', display: 'block' }}
+            className={`text-white leading-none font-light tracking-normal md:tracking-wide text-[4rem] mb-20 mt-8 md:mt-20 ${isMobile ? 'text-[1rem]': 'text-[5rem]'}`}
+            style={{ textShadow: '0 0 30px rgba(255,255,255,0.3)', display: 'block' }}
             >
               VISUAL
             </h2>
