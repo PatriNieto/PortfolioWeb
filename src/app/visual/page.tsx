@@ -334,7 +334,7 @@ export default function VisualPage() {
     {
       title: "PortfolioF",
       description: "Portfolio personal con diseño minimalista y elegante",
-      url: "https://portfoliof.vercel.app/",
+      url: "https://drive.google.com/file/d/1EekZc1KtacOAQKBD-6FuX8Mka1TidpBH/view?usp=sharing",
       category: "Portfolio"
     },
     {
